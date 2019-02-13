@@ -1,0 +1,393 @@
+2.1.4.5 Lab - Configure Extended VLANs, VTP, and DTP (Script)
+Switch 1
+SW1#show run
+Building configuration...
+
+Current configuration : 1599 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+system mtu routing 1500
+vtp domain CCNA
+vtp mode transparent
+ip subnet-zero
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 10
+ name RED
+!
+vlan 20
+ name BLUE
+!
+vlan 30
+ name YELLOW
+!
+vlan 40
+!
+vlan 99
+ name MANAGEMENT
+!
+vlan 2000
+!
+!
+!
+interface FastEthernet0/1
+ switchport mode dynamic desirable
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+ switchport mode trunk
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ no ip route-cache
+!
+interface Vlan99
+ ip address 192.168.99.1 255.255.255.0
+ no ip route-cache
+!
+ip http server
+ip http secure-server
+!
+control-plane
+!
+!
+line con 0
+line vty 5 15
+!
+end
+Switch 2
+#show run
+Building configuration...
+
+Current configuration : 3101 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname SW2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+system mtu routing 1500
+ip subnet-zero
+!
+!
+!
+crypto pki trustpoint TP-self-signed-4211824768
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4211824768
+ revocation-check none
+ rsakeypair TP-self-signed-4211824768
+!
+!
+crypto pki certificate chain TP-self-signed-4211824768
+ certificate self-signed 01
+  3082023B 308201A4 A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 34323131 38323437 3638301E 170D3933 30333031 30303030
+  35325A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D34 32313138
+  32343736 3830819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100E4A0 455475C0 1D3E9265 823A3271 9C694B49 B8CC4901 BAF3DC8F 984AD103
+  54E00CE4 0FF45BB2 3F2A6AB8 06592EBA 150B2605 DF0129B8 8E3F7FCE F8E66DC9
+  2E42C034 2078C9DE 935099D7 990FD427 46840D0F A779506D 5A08C5DE 00DB5893
+  E61F557E B8924F4B E3090035 E91A09F8 334CC451 C316B743 465EDA33 3FD044F7
+  60D10203 010001A3 63306130 0F060355 1D130101 FF040530 030101FF 300E0603
+  551D1104 07300582 0353312E 301F0603 551D2304 18301680 14D49DB2 A88714FB
+  06C7D92A FEA4C40F 6890BE60 16301D06 03551D0E 04160414 D49DB2A8 8714FB06
+  C7D92AFE A4C40F68 90BE6016 300D0609 2A864886 F70D0101 04050003 81810010
+  306E645C 899F4789 B5AB6EBA 310B3D98 EDD34E2B 86745E0E 7D348DDB E1372ECE
+  425418A6 120CD5CC 0C1C5973 372DCA0D 5F87B802 D94EB934 306157A5 CE2990A5
+  826F193C AE68F2DE 4091190C AE24BEFF 8282CCD7 0CAE50F2 04D49A5B 65BA8113
+  5823215F 722B01E3 9A509CB7 0E75846E BD331826 50AAE39D 4E463F5D 289C4B
+  quit
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+interface FastEthernet0/1
+ switchport mode dynamic desirable
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+ switchport mode trunk
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+ switchport access vlan 20
+ switchport mode access
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ no ip route-cache
+!
+interface Vlan99
+ ip address 192.168.99.2 255.255.255.0
+ no ip route-cache
+!
+ip http server
+ip http secure-server
+!
+control-plane
+!
+!
+line con 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end
+
+SW2#show vtp
+% Incomplete command.
+
+SW2#show vtp ?
+  counters  VTP statistics
+  password  VTP password
+  status    VTP domain status
+
+SW2#show vtp sta
+VTP Version                     : running VTP1 (VTP2 capable)
+Configuration Revision          : 34
+Maximum VLANs supported locally : 255
+Number of existing VLANs        : 10
+VTP Operating Mode              : Server
+VTP Domain Name                 : CCNA
+VTP Pruning Mode                : Disabled
+VTP V2 Mode                     : Disabled
+VTP Traps Generation            : Disabled
+MD5 digest                      : 0xB9 0xFB 0x7C 0xA2 0x6D 0x83 0x27 0xB7
+Configuration last modified by 0.0.0.0 at 3-1-93 00:22:23
+Local updater ID is 192.168.99.2 on interface Vl99 (lowest numbered VLAN interface found)
+SW2#
+Switch 3
+hostname s3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+system mtu routing 1500
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/1
+ switchport mode trunk
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+ switchport mode trunk
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan99
+ ip address 192.168.99.3 255.255.255.0
+!
+ip http server
+ip http secure-server
+!
+!
+line con 0
+line vty 5 15
+!
+end
