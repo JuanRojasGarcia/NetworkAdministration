@@ -1,0 +1,33 @@
+switchport mode trunk 
+switchport mode access 
+switchport access vlan 21
+
+- VTP
+vtp domain examen
+vtp password examen
+vtp mode server/client/transparent
+
+-MLS
+vlan 11
+name alumnos 
+ip address 192.168.11.0/24
+
+ip routing
+spann mode rapid
+spann vlan 11,12 root prima/seco
+
+- SW
+create necessary vlan on transparent
+spann mode rapid
+spann vlan N root prima/seco
+int to other sw > trunk
+int to pc:
+	sw mo acc
+	sw acc vlan N
+	spann bpdu ena
+	spann port
+
+- Shows
+show vtp status
+show spann summ
+show spann vlan N
