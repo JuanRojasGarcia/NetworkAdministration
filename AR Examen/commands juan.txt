@@ -1,0 +1,71 @@
+EtherChannel y HSRP
+
+// Configuracion de etherchannel con LACP
+
+int range f0/1 - 2
+channel-group 1 mode active
+int port-channel 1
+switchport mode trunk 
+switchport trunk allowed vlan 1,2,20
+
+
+
+// Routers Rip 
+router rip 
+version 2 
+network 200.1.1.0 
+default-information originate //main router 
+no auto-summary 
+
+
+// Configuracion del protocolo HSRP en el R1 y R2
+R1 - Activo 
+int g0/1
+ip address 172.16.10.2 255.255.255.0
+standby version 2
+standby 1 ip 172.16.10.1
+standby 1 prioriy 150
+standby 1 preempt 
+no shutdown 
+
+R2 - Standby 
+int g0/1
+ip address 172.16.10.3 255.255.255.0
+standby version 2
+standby 1 ip 172.16.10.1
+no shutdown 
+
+
+// Shows 
+show int port-channel 1
+show etherchannel summary
+show etherchannel port-channel
+show int f0/1 etherchannel 
+show standby 
+show standby brief
+show int trunk 
+
+// Debug
+debug standby packets
+debug standby terse
+
+
+/// Principal Configuration Etherchannel
+int range f0/3 - 4
+channel-group 2 mode on
+int port-channel 2
+switchport mode trunk 
+///
+switchport trunk native vlan 99
+
+
+int g0/0
+ip address 192.168.11.50 255.255.255.0
+no sh
+exit
+
+int g0/1
+ip address 192.168.12.50 255.255.255.0
+no sh
+exit
+

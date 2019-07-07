@@ -1,0 +1,120 @@
+///////// Configuracion de Switch 1,2,3 /////////
+
+ena
+conf t
+int range fa0/1-24
+sh
+int range gi0/1-2
+sh
+
+
+cop run start
+
+
+///////// Configuracion de Switch s2,s3 /////////
+
+// s2
+int range fa0/6, fa0/11, fa0/18
+switchport mode access
+no sh
+
+
+// s3
+int range fa0/6, fa0/11, fa0/18
+switchport mode access
+no sh
+
+
+cop run start
+
+
+///////// Crear VLAN Switch s1 /////////
+
+vlan 10
+name Staff
+vlan 20
+name Student
+vlan 30
+name Faculty
+vlan 99
+name Administracion
+end
+
+cop run start
+
+sh vlan bri
+
+
+///////// Asignar Puertos VLAN Switch s2,s3 /////////
+
+// s2
+int range fa0/6-10
+switchport access vlan 10
+int range fa0/11-17
+switchport access vlan 20
+int range fa0/18-24
+switchport access vlan 30
+end
+
+
+// s3
+int range fa0/6-10
+switchport access vlan 10
+int range fa0/11-17
+switchport access vlan 20
+int range fa0/18-24
+switchport access vlan 30
+end
+
+
+cop run start
+
+sh vlan id 'vlan-name'
+
+sh interfaces 'interface' switchport
+
+
+/// Asignar la VLAN de Administracion Switch s1,s2,s3 ///
+
+// s1
+int vlan 99
+ip add 192.168.99.1 255.255.255.0
+no sh
+
+// s2
+int vlan 99
+ip add 192.168.99.2 255.255.255.0
+no sh
+
+// s3
+int vlan 99
+ip add 192.168.99.3 255.255.255.0
+no sh
+
+
+//// Enlaces Troncales y VLAN nativa Switch s1,s2,s3 ////
+
+// s1
+int range fa0/1-5
+switchport mode trunk
+switchport trunk native vlan 99
+no sh
+end
+
+
+// s2
+int range fa0/1-5
+switchport mode trunk
+switchport trunk native vlan 99
+no sh
+end
+
+
+// s3
+int range fa0/1-5
+switchport mode trunk
+switchport trunk native vlan 99
+no sh
+end
+
+sh int trunk

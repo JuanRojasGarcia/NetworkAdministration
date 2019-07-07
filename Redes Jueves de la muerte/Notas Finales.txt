@@ -1,0 +1,63 @@
+///////Shows necesario///////
+
+	ipv6 route ::/0
+	show ip route connected
+	(para agregar networks)
+
+	show ip protocols 
+	(Para ver auto-summarization y Redistributing)
+
+	show ip route eigrp
+
+	show ip route eigrp | include 0.0.0.0 
+	(Para ver info especifico de la ruta por defecto)
+
+	show ip eigrp interfaces detail 
+	(Muestra el intervalo entre hello packets y el hold timer)
+	(Por defecto el hello interval es 5s y el hold es 15)
+
+	show ip ospf neighbor
+	
+	show ip ospf
+
+//////Configurar eigrp///////
+
+router eigrp 1
+	network x.x.x.x x.x.x.x (wildcard)
+	passive-interface ___ (interfaz hacia lan)
+	no auto-summary
+	redistribute static //Propagar ruta estática
+	redistribute ospf 1
+	
+	///opcional///
+		ip bandwidth-percent eigrp 1 75
+		bandwidth 1075
+		ip hello-interval eigrp 1 60
+		ip hold-time eigrp 1 180
+
+//////Configurar OSPF///////
+	
+router ospf 1
+	router-id x.x.x.x (No es una ip, es una id con forma de ip.. podria incluso ser 0.0.0.1, 0.0.0.2 y asi...)
+	network x.x.x.x x.x.x.x (wildcard) area 0
+	passive-interface ___
+	redistribute eigrp 1
+	default-info origin
+	////////////
+	ipv6 router ospf 1
+
+	int __
+	ipv6 ospf 1 area 0
+
+
+/// Loopback  /////
+interface loopback 0 
+ip address 1.1.1.1 255.255.255.255
+	
+
+DR chingon - alta - 200
+BDR secundario - segunda mas alta - 100
+mayor valor mayor prioridad
+clear ip ospf process
+show ip ospf neighbors
+ip ospf priority 100

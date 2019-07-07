@@ -1,0 +1,48 @@
+PAgP, LACP
+
+trunk all ints
+turn off
+
+PAgP
+channel-g N mode desirable / auto
+turn on
+int port N
+trunk
+
+LACP
+channel-g N mode active / passive
+turn on
+int port N
+trunk
+
+
+show interfaces trunk
+show spanning-tree 
+to show as one logical link
+
+show etherchannel summary
+to show the protocols
+
+spanning-tree vlan N root primary
+
+
+HSRP
+Routers
+router rip 
+version 2
+network x.x.x.x
+default-information originate //Main Router
+no auto-summary
+
+Active Router
+standby version 2
+standby 1 ip x.x.x.254 (gateway)
+standby 1 priority 150
+standby 1 preempt
+
+Standby Router
+standby version 2
+standby 1 ip x.x.x.254 (gateway)
+
+Switches
+ip default-gateway x.x.x.254

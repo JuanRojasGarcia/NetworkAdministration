@@ -1,0 +1,50 @@
+configuracion del vtp 
+
+-configurar el servidor vtp 
+s1
+
+config t
+vtp mode server
+end
+
+
+-configure el nombre de dominio y la contraseña del vtp 
+s1
+
+vtp domain CCNA
+vtp password cisco
+end
+
+configure los clientes VTP
+s2
+
+vtp mode client
+vtp domain CCNA
+vtp password cisco 
+
+configure la vlan en el servidor vtp 
+s1
+
+vlan 10 
+name sales 
+vlan 20 
+name marketing 
+vlan 30
+name accounting 
+end
+
+-verifique que los clientes vtp hayan recibido la nueva informacion de la vlan 
+s2
+
+show vlan brief
+show vtp status
+
+
+// Asignacion de puertos a las vlan 
+
+config t
+int f0/2
+switchport mode access
+switchport access vlan 10
+end
+

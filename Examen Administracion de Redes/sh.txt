@@ -1,0 +1,15 @@
+-- Informacion de todas las VLAN
+show vlan
+
+-- VLAN (name,status,associated ports)
+show vlan brief
+
+-- Informacion especifica
+show vlan name test
+
+-- Numero de VLAN en el Switch
+show vlan summary
+
+-- Informacion de los puertos 
+show interface switchport
+
